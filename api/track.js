@@ -2,7 +2,7 @@
 const { pipe, dayStr, ip, sha, readBody, P, R_TOK } = require('./_lib');
 
 const LINKS = new Set([
-  'mindrush', 'mindrush-buy', 'crust', 'flowmedia', 'vsl', 'ugc', 'shortform', 'docuseries',
+  'mindrush', 'mindrush-buy', 'mindrush-trial', 'partypack', 'nitrorally', 'crust', 'flowmedia', 'vsl', 'ugc', 'shortform', 'docuseries',
   'framebyfear', 'whatsapp', 'social-tiktok', 'social-youtube', 'social-whatsapp', 'social-games',
 ]);
 const BOT = /bot|crawl|spider|slurp|facebookexternalhit|embedly|preview|headless|lighthouse|pingdom|uptime|curl|wget|python|axios|node-fetch/i;

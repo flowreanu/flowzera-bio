@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>FlowZera — Games, apps & motion by Andrei</title>
-<meta name="description" content="Interactive TikTok LIVE games, web apps and video work by Andrei — FlowZera. MIND RUSH, Crust, FlowMedia and more.">
+<meta name="description" content="Interactive TikTok LIVE games, web apps and video work by Andrei — FlowZera. MIND RUSH, Party Pack, Nitro Rally, Crust, FlowMedia and more.">
 <meta name="theme-color" content="#06050c">
 <meta property="og:title" content="FlowZera — Games, apps & motion">
-<meta property="og:description" content="MIND RUSH, Crust, FlowMedia and more — everything I build, in one place.">
+<meta property="og:description" content="MIND RUSH, Party Pack, Nitro Rally, Crust, FlowMedia and more — everything I build, in one place.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2306050c'/%3E%3Cpath d='M18 46V18h26v7H26v5h15v7H26v9z' fill='%23c6ff3d'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -71,6 +71,23 @@ h1 span{background:linear-gradient(100deg,#fff 30%,var(--acid) 52%,#fff 74%);bac
 
 .label{display:flex;align-items:center;gap:10px;color:var(--dim);padding:18px 4px 2px}
 .label::after{content:"";flex:1;height:1px;background:var(--line)}
+
+/* ---------- more games (Party Pack, Nitro Rally) ---------- */
+.card.gm{display:flex;align-items:center;gap:16px;padding:16px 18px 16px 16px;border:1px solid var(--line);min-height:150px}
+.gm.pp{background:radial-gradient(90% 130% at 0% 50%,rgba(255,60,200,.32),transparent 65%),linear-gradient(160deg,#21093d,#0b0620)}
+.gm.nr{background:radial-gradient(90% 130% at 0% 50%,rgba(255,160,30,.30),transparent 65%),linear-gradient(160deg,#2a1406,#0d0718)}
+.gm-shot{flex:none;width:74px;aspect-ratio:9/16;border-radius:14px;overflow:hidden;border:4px solid #17141f;box-shadow:0 14px 30px -10px rgba(0,0,0,.8);rotate:-5deg;transition:rotate .4s}
+.gm:hover .gm-shot{rotate:0deg}
+.gm-shot img{width:100%;height:100%;object-fit:cover;display:block}
+.gm-txt{flex:1;min-width:0}
+.gm .gm-txt>.mono{display:block;margin-bottom:6px}
+.gm.pp .gm-txt>.mono{color:#ff8ae4}.gm.nr .gm-txt>.mono{color:#ffc35a}
+.gm h2{font-family:Bungee,var(--display);font-weight:400;font-size:24px;line-height:1;letter-spacing:.01em}
+.gm.pp h2{background:linear-gradient(180deg,#ffb3f2,#ff3dbb);-webkit-background-clip:text;background-clip:text;color:transparent}
+.gm.nr h2{background:linear-gradient(180deg,#fff27a,#ff9a1f);-webkit-background-clip:text;background-clip:text;color:transparent}
+.gm p{color:var(--dim);font-size:14px;line-height:1.35;margin-top:6px}
+.card.gm .gm-txt .gm-tag{display:inline-block;width:auto;margin-top:10px;padding:5px 9px;border-radius:99px;background:rgba(46,232,122,.14);color:#2ee87a;border:1px solid rgba(46,232,122,.35)}
+.gm .arrow{background:var(--ink);color:var(--bg);margin-left:auto}
 
 /* ---------- cards ---------- */
 .card{position:relative;border-radius:var(--r);overflow:hidden;isolation:isolate;display:block;
@@ -273,23 +290,47 @@ footer svg{width:22px;opacity:.6}
     <div class="mr-rays" aria-hidden="true"></div>
     <div class="shine"></div>
     <div class="mr-head">
-      <span class="pill feat"><i></i>Featured · New</span>
+      <span class="pill feat"><i></i>Featured · v2.0</span>
       <span class="pill ghost">TikTok LIVE game</span>
     </div>
     <img class="mr-logo" src="assets/mindrush-logo.webp" width="840" height="363" alt="MIND RUSH">
     <h2 class="mr-h">Your chat <span class="c">is the</span> <span class="g">controller</span></h2>
-    <p class="mr-sub">MIND RUSH turns your LIVE into a game show. Viewers type <b>A, B, C or D</b> in the comments, race for speed points and fight for a leaderboard that never resets.</p>
+    <p class="mr-sub">MIND RUSH 2.0 turns your LIVE into a game show. Viewers type <b>A, B, C or D</b>, race for speed points, fight a <b>Boss</b> together and settle it in a <b>Final Duel</b>.</p>
     <div class="mr-stage" aria-hidden="true">
-      <div class="phone p2"><img src="assets/shot-reveal.webp" alt="" loading="lazy"></div>
-      <div class="phone p1"><img src="assets/shot-question.webp" alt="" loading="lazy"></div>
-      <div class="qs"><small>OVER</small><span>10,000 Qs</span></div>
+      <div class="phone p2"><img src="assets/mr-duel2.webp" alt="" loading="lazy"></div>
+      <div class="phone p1"><img src="assets/mr-question.webp" alt="" loading="lazy"></div>
+      <div class="qs"><small>OVER</small><span>12,000 Qs</span></div>
     </div>
-    <div class="mr-checks"><span>One-time purchase</span><span>No TikFinity needed</span><span>Setup in 2 minutes</span></div>
+    <div class="mr-checks"><span>7 days free</span><span>Then $5/month</span><span>No TikFinity needed</span></div>
     <div class="mr-cta">
-      <a data-id="mindrush-buy" class="btn gold" href="https://flowzeragames.gumroad.com/l/mindrush">Get MIND RUSH — $4.99</a>
+      <a data-id="mindrush-trial" class="btn gold" href="mailto:andreitufaru@proton.me?subject=MIND%20RUSH%20-%20free%207-day%20trial&body=Hi%21%20I%27d%20like%20to%20start%20the%20free%207-day%20trial%20of%20MIND%20RUSH.%0A%0AMy%20TikTok%20username%3A%20%40%0A">Try it free · 7 days</a>
       <a data-id="mindrush" class="btn sec stretch" href="https://flowzeragames.vercel.app">Explore ↗</a>
     </div>
   </article>
+
+  <!-- 01b · more TikTok LIVE games -->
+  <a data-id="partypack" class="card gm pp reveal stretch" data-tilt href="https://flowzeragames.vercel.app/#partypack">
+    <div class="shine"></div>
+    <div class="gm-shot"><img src="assets/pp-hub.webp" alt="" loading="lazy"></div>
+    <div class="gm-txt">
+      <span class="mono">TikTok LIVE game · New</span>
+      <h2>Party Pack</h2>
+      <p>Punchline, Hivemind &amp; What Year? Three party games, the chat votes what's next.</p>
+      <span class="gm-tag mono">7 days free</span>
+    </div>
+    <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+  </a>
+  <a data-id="nitrorally" class="card gm nr reveal stretch" data-tilt href="https://flowzeragames.vercel.app/#nitro">
+    <div class="shine"></div>
+    <div class="gm-shot"><img src="assets/nr-race2.webp" alt="" loading="lazy"></div>
+    <div class="gm-txt">
+      <span class="mono">TikTok LIVE game · New</span>
+      <h2>Nitro Rally</h2>
+      <p>A 3D kart race your viewers join from the chat. Up to 24 racers, nitro &amp; super powers.</p>
+      <span class="gm-tag mono">7 days free</span>
+    </div>
+    <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+  </a>
 
   <!-- 02 · CRUST -->
   <a data-id="crust" class="card crust reveal stretch" data-tilt href="https://crustapp.vercel.app">
