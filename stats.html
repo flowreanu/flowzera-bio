@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>FlowZera · Stats</title>
+<meta name="theme-color" content="#06050c">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2306050c'/%3E%3Cpath d='M18 46V18h26v7H26v5h15v7H26v9z' fill='%23c6ff3d'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#06050c;--surface:#0e0c1a;--surface2:#151226;--ink:#f3f1ff;--ink2:#b9b5d1;--mute:#7d7998;--line:rgba(255,255,255,.08);
+  --acid:#c6ff3d;--views:#8b6cff;--clicks:#c07a12;--bad:#ff5a6a;--display:"Bricolage Grotesque",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--bg);color:var(--ink)}
+body{font-family:var(--display);min-height:100vh;padding:calc(env(safe-area-inset-top) + 20px) 16px calc(env(safe-area-inset-bottom) + 40px);
+  background:radial-gradient(80% 50% at 50% -10%,rgba(91,60,230,.35),transparent 70%),var(--bg) fixed}
+.mono{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+button,input{font:inherit;color:inherit}
+.wrap{max-width:980px;margin:0 auto}
+
+/* login */
+.gate{min-height:80vh;display:grid;place-items:center}
+.box{width:100%;max-width:380px;background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:28px;display:flex;flex-direction:column;gap:14px;box-shadow:0 30px 80px -30px rgba(0,0,0,.9)}
+.mark{width:52px;height:52px;border-radius:16px;background:#0c0a17;display:grid;place-items:center;border:1px solid var(--line)}
+.mark svg{width:26px}
+.box h1{font-size:28px;letter-spacing:-.03em;line-height:1}
+.box p{color:var(--ink2);font-size:14.5px;line-height:1.45}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{color:var(--mute)}
+.field input{background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:13px 14px;font-size:16px;outline:none}
+.field input:focus{border-color:var(--views)}
+.chk{display:flex;gap:8px;align-items:center;color:var(--ink2);font-size:14px}
+.chk input{accent-color:var(--acid);width:16px;height:16px}
+.go{background:var(--acid);color:#0b0a10;border:0;border-radius:12px;padding:14px;font-weight:800;font-size:15.5px;cursor:pointer}
+.go:disabled{opacity:.5}
+.err{color:var(--bad);font-size:14px;min-height:18px}
+
+/* dashboard */
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand h1{font-size:26px;letter-spacing:-.04em;line-height:1}
+.brand h1 small{display:block;color:var(--mute);font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;margin-top:4px;font-weight:400}
+.tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.seg{display:flex;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:3px}
+.seg button{border:0;background:none;padding:8px 12px;border-radius:9px;cursor:pointer;color:var(--ink2);font-size:13.5px;font-weight:600}
+.seg button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+.icon{border:1px solid var(--line);background:var(--surface);border-radius:12px;width:38px;height:38px;display:grid;place-items:center;cursor:pointer;color:var(--ink2)}
+.icon:hover{color:var(--ink)}
+.icon svg{width:16px}
+.spin svg{animation:sp .8s linear infinite}@keyframes sp{to{rotate:360deg}}
+
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:10px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px}
+.kpi .mono{color:var(--mute)}
+.kpi b{display:block;font-size:34px;letter-spacing:-.04em;font-weight:800;margin-top:8px;line-height:1;font-variant-numeric:tabular-nums}
+.kpi span{display:block;color:var(--mute);font-size:12.5px;margin-top:6px}
+.kpi i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px;vertical-align:1px}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:10px;position:relative}
+.panel h2{font-size:15px;font-weight:700;display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:12px}
+.panel h2 .mono{color:var(--mute);font-weight:400}
+.legend{display:flex;gap:14px;color:var(--ink2);font-size:12.5px}
+.legend span{display:flex;align-items:center;gap:6px}
+.legend i{width:10px;height:10px;border-radius:3px}
+.legend i.ln{height:2px;border-radius:2px;width:14px}
+.chart{position:relative;height:230px}
+.chart svg{width:100%;height:100%;display:block;overflow:visible}
+.tip{position:absolute;pointer-events:none;background:#1d1933;border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:8px 10px;font-size:12.5px;white-space:nowrap;opacity:0;transition:opacity .12s;z-index:3;box-shadow:0 10px 24px -8px rgba(0,0,0,.8)}
+.tip b{display:block;font-size:12px;color:var(--ink2);margin-bottom:4px;font-weight:600}
+.tip div{display:flex;align-items:center;gap:6px;font-variant-numeric:tabular-nums}
+.tip i{width:8px;height:8px;border-radius:2px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.rows{display:flex;flex-direction:column;gap:4px}
+.row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:7px 8px;border-radius:10px;position:relative;font-size:14px}
+.row:hover{background:rgba(255,255,255,.04)}
+.row .nm{display:flex;align-items:center;gap:9px;min-width:0;z-index:1}
+.row .nm span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .nm em{font-style:normal;color:var(--mute);font-size:12px}
+.row .v{font-variant-numeric:tabular-nums;font-weight:700;z-index:1;display:flex;gap:10px;align-items:baseline}
+.row .v small{color:var(--mute);font-weight:400;font-size:12px;min-width:38px;text-align:right}
+.row .bar{position:absolute;left:0;top:0;bottom:0;border-radius:10px;opacity:.16}
+.flag{font-size:18px;line-height:1;width:22px;text-align:center}
+.empty{color:var(--mute);font-size:14px;padding:14px 8px}
+.note{color:var(--mute);font-size:12.5px;text-align:center;margin-top:16px;line-height:1.6}
+.note button{background:none;border:0;color:var(--ink2);text-decoration:underline;cursor:pointer;font-size:12.5px}
+.tag{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:99px;padding:5px 10px;color:var(--ink2);font-size:12px}
+.tag b{width:7px;height:7px;border-radius:50%;background:var(--acid)}
+@media (max-width:760px){.kpis{grid-template-columns:1fr 1fr}.grid2{grid-template-columns:1fr}.kpi b{font-size:28px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+
+<script>
+(()=>{
+const app=document.getElementById('app');
+const LINKS={
+  'mindrush':['MIND RUSH · site','Featured'],'mindrush-buy':['MIND RUSH · Buy on Gumroad','Featured'],
+  'crust':['Crust · recipe app','App'],'flowmedia':['FlowMedia · portfolio','Video'],
+  'vsl':['VSL Demo','Video work'],'ugc':['UGC · Talking Head','Video work'],'shortform':['Short-form Example','Video work'],
+  'docuseries':['Long-form DocuSeries Intro','Video work'],'framebyfear':['Frame By Fear · TikTok','Channel'],
+  'whatsapp':['WhatsApp · contact card','Contact'],'social-tiktok':['TikTok icon','Header'],'social-youtube':['YouTube icon','Header'],
+  'social-whatsapp':['WhatsApp icon','Header'],'social-games':['FlowZeraGames icon','Header']};
+const store={get(k){try{return localStorage.getItem(k)||sessionStorage.getItem(k)}catch(e){return null}},
+  set(k,v,keep){try{(keep?localStorage:sessionStorage).setItem(k,v)}catch(e){}},
+  del(k){try{localStorage.removeItem(k);sessionStorage.removeItem(k)}catch(e){}}};
+const nf=new Intl.NumberFormat('en-US');
+let regionNames; try{regionNames=new Intl.DisplayNames(['en'],{type:'region'})}catch(e){}
+const flag=cc=>/^[A-Z]{2}$/.test(cc)&&cc!=='XX'?String.fromCodePoint(...[...cc].map(c=>127397+c.charCodeAt(0))):'🌐';
+const country=cc=>cc==='XX'?'Unknown':(regionNames?.of(cc)||cc);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let pw=store.get('fz_stats_pw')||'', range=store.get('fz_stats_range')||'7', data=null;
+
+async function api(body){
+  const r=await fetch('/api/stats',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  let j={}; try{j=await r.json()}catch(e){}
+  if(!r.ok) throw new Error(j.error||('Error '+r.status));
+  return j;
+}
+
+function gate(setup,msg=''){
+  app.innerHTML=`<div class="gate"><form class="box" id="f">
+    <div class="mark"><svg viewBox="0 0 64 64"><path d="M14 54V10h36v11H27v8h20v11H27v14z" fill="#c6ff3d"/></svg></div>
+    <h1>${setup?'Set your stats password':'FlowZera stats'}</h1>
+    <p>${setup?'First visit — choose the password that will protect this page. Only you will know it.':'Private page. Enter your password.'}</p>
+    <div class="field"><label class="mono" for="p1">Password</label><input id="p1" type="password" autocomplete="${setup?'new-password':'current-password'}" required minlength="${setup?8:1}"></div>
+    ${setup?'<div class="field"><label class="mono" for="p2">Repeat password</label><input id="p2" type="password" autocomplete="new-password" required minlength="8"></div>':''}
+    <label class="chk"><input type="checkbox" id="keep" checked> Keep me signed in on this device</label>
+    <button class="go" id="b">${setup?'Save & open stats':'Open stats'}</button>
+    <div class="err" id="e" role="alert">${esc(msg)}</div></form></div>`;
+  const f=document.getElementById('f'),e=document.getElementById('e'),b=document.getElementById('b');
+  document.getElementById('p1').focus();
+  f.addEventListener('submit',async ev=>{ev.preventDefault();
+    const p1=document.getElementById('p1').value;
+    if(setup&&p1!==document.getElementById('p2').value){e.textContent='Passwords do not match.';return;}
+    if(setup&&p1.length<8){e.textContent='Use at least 8 characters.';return;}
+    b.disabled=true;e.textContent='';
+    try{ data=await api({pw:p1,range,setup}); pw=p1; const keep=document.getElementById('keep').checked;
+      store.set('fz_stats_pw',p1,keep); try{localStorage.setItem('fz_owner','1')}catch(x){} render(); }
+    catch(x){ e.textContent=x.message; b.disabled=false; }
+  });
+}
+
+async function load(){
+  const rb=document.getElementById('refresh'); rb&&rb.classList.add('spin');
+  try{ data=await api({pw,range}); if(data.needsSetup) return gate(true); render(); }
+  catch(x){ if(/Wrong password/.test(x.message)){store.del('fz_stats_pw');pw='';return gate(false,'Please sign in again.');}
+    if(!data) return gate(false,x.message); alert1(x.message); }
+  finally{ rb&&rb.classList.remove('spin'); }
+}
+function alert1(m){const n=document.getElementById('msg'); if(n){n.textContent=m;}}
+
+function list(obj,opts){
+  const entries=Object.entries(obj||{}).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]);
+  if(!entries.length) return `<div class="empty">No data yet for this period.</div>`;
+  const total=entries.reduce((a,[,v])=>a+v,0), max=entries[0][1];
+  return `<div class="rows" role="table">${entries.slice(0,opts.limit||50).map(([k,v])=>{
+    const [label,sub,icon]=opts.label(k);
+    return `<div class="row" role="row"><div class="bar" style="width:${(v/max*100).toFixed(1)}%;background:${opts.color}"></div>
+      <div class="nm" role="cell">${icon?`<span class="flag">${icon}</span>`:''}<span>${esc(label)}</span>${sub?`<em>${esc(sub)}</em>`:''}</div>
+      <div class="v" role="cell">${nf.format(v)}<small>${(v/total*100).toFixed(v/total<.1?1:0)}%</small></div></div>`}).join('')}</div>`;
+}
+
+function render(){
+  const d=data, ctr=d.views?(d.clicks/d.views*100):0;
+  const rl={'1':'Today','7':'Last 7 days','30':'Last 30 days','all':'All time'}[d.range];
+  app.innerHTML=`
+  <div class="top">
+    <div class="brand"><div class="mark"><svg viewBox="0 0 64 64"><path d="M14 54V10h36v11H27v8h20v11H27v14z" fill="#c6ff3d"/></svg></div>
+      <h1>Stats<small>flowzera.vercel.app</small></h1></div>
+    <div class="tools">
+      <div class="seg" role="group" aria-label="Time range">${[['1','Today'],['7','7 days'],['30','30 days'],['all','All']].map(([k,l])=>`<button data-r="${k}" aria-pressed="${k===d.range}">${l}</button>`).join('')}</div>
+      <button class="icon" id="refresh" title="Refresh" aria-label="Refresh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8M21 3v5h-5"/></svg></button>
+      <button class="icon" id="out" title="Sign out" aria-label="Sign out"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg></button>
+    </div>
+  </div>
+  <div class="kpis">
+    <div class="kpi"><div class="mono"><i style="background:var(--views)"></i>Views</div><b>${nf.format(d.views)}</b><span>${rl}</span></div>
+    <div class="kpi"><div class="mono">Unique visitors</div><b>${nf.format(d.uniques)}</b><span>${d.uniques?(d.views/d.uniques).toFixed(1)+' views each':'—'}</span></div>
+    <div class="kpi"><div class="mono"><i style="background:var(--clicks)"></i>Link clicks</div><b>${nf.format(d.clicks)}</b><span>${rl}</span></div>
+    <div class="kpi"><div class="mono">Click rate</div><b>${ctr.toFixed(ctr<10&&ctr>0?1:0)}%</b><span>clicks ÷ views</span></div>
+  </div>
+  <div class="panel">
+    <h2><span>Views & clicks per day</span><span class="legend"><span><i style="background:var(--views)"></i>Views</span><span><i class="ln" style="background:var(--clicks)"></i>Clicks</span></span></h2>
+    <div class="chart" id="chart"></div>
+  </div>
+  <div class="grid2">
+    <div class="panel"><h2><span>Clicks per link</span><span class="mono">${nf.format(d.clicks)} total</span></h2>
+      ${list(d.links,{color:'var(--clicks)',label:k=>[LINKS[k]?.[0]||k,LINKS[k]?.[1]]})}</div>
+    <div class="panel"><h2><span>Countries</span><span class="mono">by views</span></h2>
+      ${list(d.countries,{color:'var(--views)',label:k=>[country(k),'',flag(k)]})}</div>
+    <div class="panel"><h2><span>Where visitors come from</span><span class="mono">source</span></h2>
+      ${list(d.sources,{color:'var(--views)',label:k=>[k]})}</div>
+    <div class="panel"><h2><span>Clicks by country</span><span class="mono">by clicks</span></h2>
+      ${list(d.clickCountries,{color:'var(--clicks)',label:k=>[country(k),'',flag(k)]})}</div>
+    <div class="panel"><h2><span>Devices</span><span class="mono">by views</span></h2>
+      ${list(d.devices,{color:'var(--views)',label:k=>[k]})}</div>
+    <div class="panel"><h2><span>Daily table</span><span class="mono">views · uniques · clicks</span></h2>
+      <div class="rows">${d.days.slice().reverse().filter(x=>x.views||x.clicks).slice(0,31).map(x=>`<div class="row"><div class="nm"><span>${fmtDate(x.date,true)}</span></div><div class="v">${nf.format(x.views)}<small>${nf.format(x.uniques)} u</small><small>${nf.format(x.clicks)} c</small></div></div>`).join('')||'<div class="empty">No data yet for this period.</div>'}</div></div>
+  </div>
+  <p class="note"><span class="tag"><b></b>Your own visits on this device aren't counted</span><br>
+    Times in Munich time · updated ${new Date(d.generated).toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})} · <span id="msg"></span>
+    <button id="chg">Change password</button></p>`;
+  app.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>{range=b.dataset.r;store.set('fz_stats_range',range,true);load();});
+  document.getElementById('refresh').onclick=load;
+  document.getElementById('out').onclick=()=>{store.del('fz_stats_pw');pw='';data=null;gate(false);};
+  document.getElementById('chg').onclick=changePw;
+  chart(d.days);
+}
+
+function changePw(){
+  const box=document.createElement('div');
+  box.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.6);display:grid;place-items:center;z-index:9;padding:16px';
+  box.innerHTML=`<form class="box"><h1>Change password</h1>
+    <div class="field"><label class="mono">New password</label><input id="n1" type="password" autocomplete="new-password" minlength="8" required></div>
+    <div class="field"><label class="mono">Repeat</label><input id="n2" type="password" autocomplete="new-password" minlength="8" required></div>
+    <button class="go">Save</button><button type="button" class="go" style="background:var(--surface2);color:var(--ink)" id="cx">Cancel</button><div class="err" id="ne"></div></form>`;
+  document.body.appendChild(box);
+  box.querySelector('#cx').onclick=()=>box.remove();
+  box.querySelector('form').onsubmit=async e=>{e.preventDefault();const a=box.querySelector('#n1').value,b=box.querySelector('#n2').value;
+    if(a!==b){box.querySelector('#ne').textContent='Passwords do not match.';return;}
+    try{await api({pw,range,newPw:a});pw=a;store.set('fz_stats_pw',a,!!localStorage.getItem('fz_stats_pw'));box.remove();}
+    catch(x){box.querySelector('#ne').textContent=x.message;}};
+}
+
+function fmtDate(s,long){const d=new Date(s+'T12:00:00Z');return d.toLocaleDateString('en-GB',long?{weekday:'short',day:'numeric',month:'short'}:{day:'numeric',month:'short'});}
+
+function chart(days){
+  const el=document.getElementById('chart'); if(!el) return;
+  const W=el.clientWidth||600,H=el.clientHeight||230,pl=34,pr=8,pt=10,pb=24;
+  const n=days.length, max=Math.max(4,...days.map(d=>Math.max(d.views,d.clicks)));
+  const step=Math.pow(10,Math.floor(Math.log10(max))), nice=Math.ceil(max/step)*step, top=nice<max?max:nice;
+  const iw=W-pl-pr, ih=H-pt-pb, bw=iw/n, x=i=>pl+bw*i+bw/2, y=v=>pt+ih-(v/top)*ih;
+  const ticks=[0,top/2,top].map(v=>Math.round(v));
+  const barW=Math.max(2,Math.min(28,bw-2));
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Views and clicks per day">`;
+  ticks.forEach(t=>{s+=`<line x1="${pl}" x2="${W-pr}" y1="${y(t)}" y2="${y(t)}" stroke="rgba(255,255,255,${t?0.06:0.14})"/><text x="${pl-8}" y="${y(t)+4}" fill="#7d7998" font-size="10.5" text-anchor="end" font-family="JetBrains Mono">${nf.format(t)}</text>`;});
+  days.forEach((d,i)=>{const h=ih-(y(d.views)-pt); if(d.views) s+=`<path d="${barPath(x(i)-barW/2,y(d.views),barW,h)}" fill="var(--views)"/>`;});
+  const pts=days.map((d,i)=>[x(i),y(d.clicks)]);
+  if(n>1) s+=`<polyline points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="var(--clicks)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
+  pts.forEach((p,i)=>{ if(days[i].clicks||n<=14) s+=`<circle cx="${p[0]}" cy="${p[1]}" r="4" fill="var(--clicks)" stroke="var(--surface)" stroke-width="2"/>`;});
+  const every=Math.ceil(n/(W<500?5:9));
+  days.forEach((d,i)=>{ if(i%every===0||i===n-1&&n<=9) s+=`<text x="${x(i)}" y="${H-6}" fill="#7d7998" font-size="10.5" text-anchor="middle" font-family="JetBrains Mono">${fmtDate(d.date)}</text>`;});
+  s+=`<line id="xh" y1="${pt}" y2="${pt+ih}" stroke="rgba(255,255,255,.25)" stroke-dasharray="3 3" opacity="0"/>`;
+  s+=`<rect x="${pl}" y="0" width="${iw}" height="${H}" fill="transparent" id="hit"/></svg><div class="tip" id="tip"></div>`;
+  el.innerHTML=s;
+  const tip=el.querySelector('#tip'),xh=el.querySelector('#xh'),hit=el.querySelector('#hit');
+  const move=e=>{const r=el.getBoundingClientRect(),cx=(e.clientX-r.left)*(W/r.width);
+    const i=Math.max(0,Math.min(n-1,Math.floor((cx-pl)/bw))),d=days[i];
+    xh.setAttribute('x1',x(i));xh.setAttribute('x2',x(i));xh.setAttribute('opacity',1);
+    tip.innerHTML=`<b>${fmtDate(d.date,true)}</b><div><i style="background:var(--views)"></i>${nf.format(d.views)} views · ${nf.format(d.uniques)} unique</div><div><i style="background:var(--clicks)"></i>${nf.format(d.clicks)} clicks</div>`;
+    tip.style.opacity=1; const tx=x(i)*(r.width/W); tip.style.left=Math.min(r.width-tip.offsetWidth-4,Math.max(4,tx-tip.offsetWidth/2))+'px'; tip.style.top='-8px';};
+  hit.addEventListener('pointermove',move); hit.addEventListener('pointerdown',move);
+  hit.addEventListener('pointerleave',()=>{tip.style.opacity=0;xh.setAttribute('opacity',0);});
+}
+function barPath(x,y,w,h){const r=Math.min(4,w/2,h);return `M${x},${y+h}V${y+r}Q${x},${y} ${x+r},${y}H${x+w-r}Q${x+w},${y} ${x+w},${y+r}V${y+h}Z`;}
+
+let rt; addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>data&&data.days&&chart(data.days),150);});
+if(pw) load(); else api({range}).then(j=>gate(!!j.needsSetup)).catch(()=>gate(false));
+})();
+</script>
+</body>
+</html>
