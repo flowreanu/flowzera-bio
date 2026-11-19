@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FlowZera — Games, apps & motion by Andrei</title>
+<meta name="description" content="Interactive TikTok LIVE games, web apps and video work by Andrei — FlowZera. MIND RUSH, Crust, FlowMedia and more.">
+<meta name="theme-color" content="#06050c">
+<meta property="og:title" content="FlowZera — Games, apps & motion">
+<meta property="og:description" content="MIND RUSH, Crust, FlowMedia and more — everything I build, in one place.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2306050c'/%3E%3Cpath d='M18 46V18h26v7H26v5h15v7H26v9z' fill='%23c6ff3d'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Fraunces:ital,opsz,wght@1,9..144,600..900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#06050c; --ink:#f3f1ff; --dim:#9b97b3; --line:rgba(255,255,255,.08);
+  --acid:#c6ff3d; --violet:#7b5cff; --pink:#ff3d9a; --cyan:#34e2ff;
+  --r:28px; --display:"Bricolage Grotesque",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--bg);color:var(--ink);-webkit-text-size-adjust:100%}
+body{font-family:var(--display);min-height:100vh;overflow-x:hidden;
+  padding:calc(env(safe-area-inset-top) + 28px) 16px calc(env(safe-area-inset-bottom) + 40px)}
+a{color:inherit;text-decoration:none}
+.mono{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+
+/* ---------- ambient background ---------- */
+.bg{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.bg i{position:absolute;border-radius:50%;filter:blur(90px);opacity:.55;will-change:transform}
+.bg i:nth-child(1){width:60vmax;height:60vmax;left:-20vmax;top:-25vmax;background:#3a1fd1;animation:drift 22s ease-in-out infinite alternate}
+.bg i:nth-child(2){width:45vmax;height:45vmax;right:-18vmax;top:30vh;background:#ff2f8f;opacity:.28;animation:drift 28s ease-in-out infinite alternate-reverse}
+.bg i:nth-child(3){width:40vmax;height:40vmax;left:10vw;bottom:-25vmax;background:#0fb8d6;opacity:.22;animation:drift 25s ease-in-out infinite alternate}
+.bg::before{content:"";position:absolute;inset:0;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:56px 56px;mask-image:radial-gradient(ellipse at 50% 0%,#000 10%,transparent 70%);-webkit-mask-image:radial-gradient(ellipse at 50% 0%,#000 10%,transparent 70%)}
+.bg::after{content:"";position:absolute;inset:-50%;opacity:.07;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+@keyframes drift{to{transform:translate(8vmax,6vmax) scale(1.15)}}
+
+.wrap{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+
+/* ---------- header ---------- */
+header{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;padding:8px 0 18px}
+.topbar{width:100%;display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.status{display:flex;align-items:center;gap:8px;color:var(--dim)}
+.status b{width:7px;height:7px;border-radius:50%;background:var(--acid);box-shadow:0 0 0 0 rgba(198,255,61,.6);animation:ping 2s infinite}
+@keyframes ping{70%{box-shadow:0 0 0 9px rgba(198,255,61,0)}100%{box-shadow:0 0 0 0 rgba(198,255,61,0)}}
+.share{border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--ink);border-radius:99px;padding:8px 14px;cursor:pointer;font:inherit;display:flex;gap:7px;align-items:center;backdrop-filter:blur(10px);transition:.2s}
+.share:hover{background:rgba(255,255,255,.1)}
+.avatar{position:relative;width:104px;height:104px;border-radius:32px;display:grid;place-items:center;isolation:isolate}
+.avatar::before{content:"";position:absolute;inset:-3px;border-radius:35px;z-index:-1;
+  background:conic-gradient(from var(--a,0deg),var(--acid),var(--cyan),var(--violet),var(--pink),var(--acid));animation:spin 6s linear infinite}
+.avatar::after{content:"";position:absolute;inset:0;border-radius:32px;background:#0c0a17;z-index:-1}
+.avatar svg{width:52px}
+.avatar img{position:absolute;inset:4px;width:calc(100% - 8px);height:calc(100% - 8px);object-fit:cover;border-radius:28px}
+@property --a{syntax:"<angle>";inherits:false;initial-value:0deg}
+@keyframes spin{to{--a:360deg}}
+h1{font-size:clamp(40px,11vw,58px);font-weight:800;letter-spacing:-.045em;line-height:.9;font-variation-settings:"opsz" 96}
+h1 span{background:linear-gradient(100deg,#fff 30%,var(--acid) 52%,#fff 74%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sheen 7s ease-in-out infinite}
+@keyframes sheen{0%,100%{background-position:100% 0}50%{background-position:0 0}}
+.bio{color:var(--dim);font-size:16px;line-height:1.45;max-width:400px}
+.bio strong{color:var(--ink);font-weight:600}
+.roles{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.roles span{border:1px solid var(--line);border-radius:99px;padding:6px 11px;background:rgba(255,255,255,.03)}
+.socials{display:flex;gap:10px}
+.socials a{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;border:1px solid var(--line);background:rgba(255,255,255,.04);transition:.25s}
+.socials a:hover{background:var(--ink);color:var(--bg);transform:translateY(-3px)}
+.socials svg{width:19px;height:19px}
+
+.label{display:flex;align-items:center;gap:10px;color:var(--dim);padding:18px 4px 2px}
+.label::after{content:"";flex:1;height:1px;background:var(--line)}
+
+/* ---------- cards ---------- */
+.card{position:relative;border-radius:var(--r);overflow:hidden;isolation:isolate;display:block;
+  transform:perspective(900px) rotateX(var(--rx,0)) rotateY(var(--ry,0));transition:transform .5s cubic-bezier(.2,.8,.2,1),box-shadow .4s;
+  box-shadow:0 1px 0 rgba(255,255,255,.08) inset,0 20px 50px -20px rgba(0,0,0,.8)}
+.card:hover{--lift:1}
+.card .shine{position:absolute;inset:0;z-index:5;pointer-events:none;opacity:0;transition:opacity .3s;
+  background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.14),transparent 45%)}
+.card:hover .shine{opacity:1}
+.stretch::after{content:"";position:absolute;inset:0;z-index:4}
+.arrow{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;flex:none;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.card:hover .arrow{transform:rotate(-45deg)}
+.arrow svg{width:16px}
+.reveal{opacity:0;transform:translateY(26px)}
+.reveal.in{opacity:1;transform:none;transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1)}
+
+/* ===== MIND RUSH ===== */
+.mr{background:#07041a;padding:22px;min-height:520px;display:flex;flex-direction:column;
+  border:1px solid rgba(123,92,255,.35);box-shadow:0 0 0 1px rgba(123,92,255,.15),0 30px 80px -20px rgba(123,92,255,.55)}
+.mr::before{content:"";position:absolute;inset:0;z-index:-1;
+  background:radial-gradient(120% 70% at 85% 0%,rgba(123,92,255,.55),transparent 60%),radial-gradient(90% 60% at 0% 100%,rgba(255,61,154,.35),transparent 60%),
+  repeating-linear-gradient(115deg,transparent 0 22px,rgba(255,255,255,.025) 22px 23px)}
+.mr-rays{position:absolute;width:900px;height:900px;left:50%;top:38%;translate:-50% -50%;z-index:-1;opacity:.35;
+  background:repeating-conic-gradient(from 0deg,rgba(123,92,255,.0) 0 8deg,rgba(123,92,255,.35) 8deg 10deg);
+  mask-image:radial-gradient(circle,#000 0,transparent 55%);-webkit-mask-image:radial-gradient(circle,#000 0,transparent 55%);animation:rot 60s linear infinite}
+@keyframes rot{to{rotate:360deg}}
+.mr-head{display:flex;justify-content:space-between;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:7px;border-radius:99px;padding:7px 11px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:600}
+.pill.feat{background:var(--acid);color:#0b0a10}
+.pill.feat i{width:6px;height:6px;border-radius:50%;background:#0b0a10;animation:blink 1.2s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+.pill.ghost{border:1px solid rgba(255,255,255,.18);color:#d9d3ff}
+.mr-logo{margin:26px 0 4px;font-weight:800;font-style:italic;font-size:clamp(68px,20vw,104px);line-height:.82;letter-spacing:-.06em;
+  font-variation-settings:"opsz" 96;transform:skewX(-6deg);position:relative}
+.mr-logo .l1{display:block;background:linear-gradient(180deg,#fff 0%,#cfc3ff 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.mr-logo .l2{display:block;background:linear-gradient(90deg,var(--pink),#ff8a3d 50%,var(--acid));-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 6px 24px rgba(255,61,154,.45))}
+.mr-logo svg{position:absolute;right:4%;top:6%;width:22%;filter:drop-shadow(0 0 18px var(--acid));animation:zap 3s ease-in-out infinite}
+@keyframes zap{0%,100%{opacity:1;transform:scale(1)}48%{opacity:1}50%{opacity:.2;transform:scale(.92)}52%{opacity:1;transform:scale(1.05)}}
+.mr-sub{color:#cdc6f5;font-size:15.5px;line-height:1.4;max-width:330px;margin-top:10px}
+.mr-game{margin-top:20px;border-radius:20px;background:rgba(10,6,34,.72);border:1px solid rgba(255,255,255,.09);padding:14px;backdrop-filter:blur(8px);position:relative}
+.mr-qrow{display:flex;gap:12px;align-items:center;margin-bottom:12px}
+.timer{width:42px;height:42px;flex:none;position:relative;display:grid;place-items:center;font-family:var(--mono);font-weight:600;font-size:13px}
+.timer svg{position:absolute;inset:0;rotate:-90deg}
+.timer circle{fill:none;stroke-width:4}
+.timer .t2{stroke:var(--acid);stroke-dasharray:113;stroke-dashoffset:0;stroke-linecap:round;animation:count 6s linear infinite}
+@keyframes count{to{stroke-dashoffset:113}}
+.mr-q{font-weight:700;font-size:15px;line-height:1.25}
+.ans{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.ans div{border-radius:12px;padding:10px 11px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);font-size:13.5px;font-weight:600;display:flex;gap:8px;align-items:center;position:relative;overflow:hidden}
+.ans b{font-family:var(--mono);font-size:11px;width:20px;height:20px;border-radius:6px;display:grid;place-items:center;background:rgba(255,255,255,.1)}
+.ans div::before{content:"";position:absolute;inset:0;transform-origin:left;transform:scaleX(var(--p,0));background:rgba(123,92,255,.28);z-index:-1;transition:transform 1s}
+.ans .ok{animation:ok 6s infinite}
+.ans .ok b{animation:okb 6s infinite}
+@keyframes ok{0%,72%{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.08);color:inherit}76%,100%{background:var(--acid);border-color:var(--acid);color:#0b0a10}}
+@keyframes okb{0%,72%{background:rgba(255,255,255,.1)}76%,100%{background:rgba(0,0,0,.15)}}
+.chat{margin-top:11px;height:22px;overflow:hidden;font-family:var(--mono);font-size:11.5px;color:#a9a2d6}
+.chat ul{list-style:none;animation:feed 9s steps(1) infinite}
+.chat li{height:22px;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.chat li em{font-style:normal;color:var(--acid)}
+.chat li span{color:#fff}
+@keyframes feed{0%{transform:translateY(0)}16.6%{transform:translateY(-22px)}33.3%{transform:translateY(-44px)}50%{transform:translateY(-66px)}66.6%{transform:translateY(-88px)}83.3%{transform:translateY(-110px)}}
+.mr-feats{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.mr-feats span{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:6px 9px;border-radius:8px;background:rgba(255,255,255,.06);color:#d8d2ff}
+.mr-cta{display:flex;gap:8px;margin-top:auto;padding-top:20px;position:relative;z-index:6}
+.btn{flex:1;white-space:nowrap;display:flex;align-items:center;justify-content:space-between;gap:10px;border-radius:16px;padding:15px 16px;font-weight:700;font-size:15.5px;transition:transform .25s,background .25s}
+.btn:active{transform:scale(.97)}
+.btn.primary{background:#fff;color:#0b0a10}
+.btn.primary:hover{background:var(--acid)}
+.btn.sec{flex:0 0 auto;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14)}
+.btn.sec:hover{background:rgba(255,255,255,.16)}
+.btn small{font-family:var(--mono);font-size:11px;font-weight:600;opacity:.65}
+
+/* ===== CRUST ===== */
+.crust{background:#f3e7d3;color:#2a1a0e;padding:22px;min-height:300px;display:grid;grid-template-columns:1.15fr .85fr;gap:8px}
+.crust::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.5;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.75' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .3 0 0 0 0 .1 0 0 0 .18 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.crust .meta{display:flex;flex-direction:column;gap:12px}
+.ro{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;border-radius:99px;padding:6px 10px 6px 6px;background:#2a1a0e;color:#f3e7d3;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:600}
+.flag{width:22px;height:15px;border-radius:3px;overflow:hidden;display:flex}
+.flag i{flex:1}
+.crust h2{font-family:"Fraunces",serif;font-style:italic;font-weight:900;font-size:clamp(58px,17vw,84px);line-height:.85;letter-spacing:-.04em;
+  background:linear-gradient(170deg,#e8a33a 10%,#b4561c 55%,#6b2a0c 95%);-webkit-background-clip:text;background-clip:text;color:transparent;margin-top:6px}
+.crust p{font-size:15px;line-height:1.4;color:#5a4130;max-width:250px}
+.crust .foot{display:flex;align-items:center;gap:10px;margin-top:auto}
+.crust .arrow{background:#2a1a0e;color:#f3e7d3}
+.crust .foot span{font-weight:700;font-size:14.5px}
+.plate{position:relative;align-self:center;justify-self:center;width:min(100%,210px);aspect-ratio:1}
+.basket{position:absolute;inset:8%;border-radius:50%;
+  background:radial-gradient(circle at 50% 50%,#2a1a0e 0 30%,transparent 30.5%),repeating-radial-gradient(circle,#3a281a 0 3px,#24160c 3px 7px);
+  box-shadow:inset 0 0 0 7px #1a0f07,0 18px 40px -10px rgba(80,35,5,.55);animation:rot 40s linear infinite}
+.basket::after{content:"";position:absolute;inset:20%;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#ffd27a,#e08b2a 45%,#9a4413 80%);box-shadow:0 0 30px rgba(255,170,60,.55),inset -6px -8px 14px rgba(90,30,0,.5)}
+.chip{position:absolute;background:#fff;color:#2a1a0e;border-radius:12px;padding:7px 10px;font-family:var(--mono);font-size:11px;font-weight:600;box-shadow:0 8px 20px -8px rgba(80,35,5,.45);white-space:nowrap;animation:bob 4s ease-in-out infinite}
+.chip:nth-of-type(2){top:2%;right:-4%;animation-delay:-1s}
+.chip:nth-of-type(3){bottom:12%;left:-10%;animation-delay:-2.2s;background:#2a1a0e;color:#ffd27a}
+.chip:nth-of-type(4){bottom:-2%;right:4%;animation-delay:-3s}
+@keyframes bob{50%{transform:translateY(-7px)}}
+.heat{position:absolute;left:50%;top:-6%;width:60%;translate:-50% 0;height:30%;display:flex;justify-content:space-around}
+.heat i{width:3px;border-radius:3px;background:linear-gradient(transparent,rgba(232,140,40,.6));animation:steam 2.6s ease-in-out infinite}
+.heat i:nth-child(2){animation-delay:-.9s}.heat i:nth-child(3){animation-delay:-1.7s}
+@keyframes steam{0%{opacity:0;transform:translateY(20px) scaleY(.6)}50%{opacity:1}100%{opacity:0;transform:translateY(-14px) scaleY(1.1)}}
+
+/* ===== FLOWMEDIA ===== */
+.fm{background:#0d0d10;border:1px solid var(--line);padding:22px;min-height:270px;display:flex;flex-direction:column;gap:16px}
+.fm::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(80% 90% at 100% 0%,rgba(52,226,255,.18),transparent 60%)}
+.fm-top{display:flex;justify-content:space-between;align-items:center;color:var(--dim)}
+.rec{display:flex;align-items:center;gap:7px;color:#ff4d4d}
+.rec i{width:8px;height:8px;border-radius:50%;background:#ff4d4d;animation:blink 1.4s steps(2) infinite}
+.fm h2{font-size:clamp(40px,11vw,54px);font-weight:800;letter-spacing:-.05em;line-height:.9}
+.fm h2 em{font-style:normal;color:var(--cyan)}
+.fm .tag{color:var(--dim);font-size:15px;margin-top:6px}
+.tl{position:relative;border-radius:14px;background:#141419;border:1px solid var(--line);padding:10px 10px 8px;overflow:hidden}
+.ruler{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9px;color:#5d5b6c;margin-bottom:7px}
+.track{height:16px;position:relative;margin-bottom:5px}
+.track i{position:absolute;top:0;bottom:0;border-radius:4px}
+.t1 i{background:linear-gradient(90deg,#7b5cff,#9f87ff)}.t2 i{background:linear-gradient(90deg,#34e2ff,#7ff0ff)}
+.t3{height:20px;display:flex;align-items:center;gap:2px}
+.t3 b{flex:1;background:#c6ff3d;border-radius:2px;opacity:.75}
+.playhead{position:absolute;top:0;bottom:0;width:2px;background:#ff4d4d;left:8%;animation:play 7s linear infinite;box-shadow:0 0 12px #ff4d4d}
+.playhead::before{content:"";position:absolute;top:0;left:-5px;border:6px solid transparent;border-top:8px solid #ff4d4d}
+@keyframes play{to{left:96%}}
+.fm .foot{display:flex;justify-content:space-between;align-items:center}
+.fm .arrow{background:var(--cyan);color:#06050c}
+.fm .foot span{font-weight:700}
+
+/* ===== WORK GRID ===== */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tile{background:rgba(255,255,255,.035);border:1px solid var(--line);border-radius:22px;padding:14px;display:flex;flex-direction:column;gap:12px;min-height:200px;backdrop-filter:blur(12px)}
+.tile .frame{flex:1;border-radius:12px;position:relative;display:grid;place-items:center;overflow:hidden;min-height:96px}
+.tile .frame i{display:block;border-radius:8px;border:1.5px solid rgba(255,255,255,.55);position:relative;background:rgba(0,0,0,.25);display:grid;place-items:center}
+.tile .frame i::after{content:"";border-left:10px solid #fff;border-top:6px solid transparent;border-bottom:6px solid transparent;margin-left:3px}
+.r169{width:74%;aspect-ratio:16/9}.r916{height:84px;aspect-ratio:9/16}
+.f1{background:linear-gradient(135deg,#3b1fd1,#ff3d9a)}
+.f2{background:linear-gradient(135deg,#0fb8d6,#3b1fd1)}
+.f3{background:linear-gradient(135deg,#c6ff3d,#0fb8d6)}
+.f4{background:linear-gradient(135deg,#ff8a3d,#ff3d9a)}
+.frame .ratio{position:absolute;left:8px;top:8px;font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;background:rgba(0,0,0,.4);padding:3px 6px;border-radius:5px}
+.tile h3{font-size:15.5px;font-weight:700;line-height:1.15;letter-spacing:-.01em}
+.tile .src{display:flex;justify-content:space-between;align-items:center;color:var(--dim)}
+.tile .src svg{width:14px;transition:transform .3s}
+.tile:hover .src svg{transform:translate(2px,-2px)}
+
+/* ===== FRAME BY FEAR ===== */
+.fbf{background:#080303;border:1px solid rgba(255,40,40,.18);padding:20px;display:flex;align-items:center;gap:16px;min-height:150px}
+.fbf::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(70% 120% at 0% 50%,rgba(200,10,20,.35),transparent 65%),repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 1px,transparent 1px 3px);animation:flick 5s infinite}
+@keyframes flick{0%,100%{opacity:1}92%{opacity:1}93%{opacity:.4}94%{opacity:1}96%{opacity:.6}}
+.eye{width:86px;height:86px;flex:none;border-radius:50%;background:radial-gradient(circle,#2a0000,#000 70%);display:grid;place-items:center;box-shadow:0 0 40px rgba(255,0,0,.25)}
+.eye svg{width:66px;animation:lid 5s infinite}
+@keyframes lid{0%,44%,52%,100%{transform:scaleY(1)}48%{transform:scaleY(.06)}}
+.eye .pupil{animation:look 7s ease-in-out infinite}
+@keyframes look{0%,100%{transform:translateX(0)}30%{transform:translateX(-6px)}65%{transform:translateX(6px)}}
+.fbf h2{font-family:"Fraunces",serif;font-style:italic;font-weight:800;font-size:28px;letter-spacing:-.02em;line-height:1;color:#ffdede}
+.fbf p{color:#b88;font-size:14px;margin-top:6px;line-height:1.35}
+.fbf .mono{color:#ff5a5a;margin-bottom:6px;display:block}
+.fbf .arrow{background:#ff2a2a;color:#000;margin-left:auto}
+
+/* ===== CONTACT ===== */
+.wa{background:var(--acid);color:#0b0a10;padding:24px 22px;display:flex;flex-direction:column;gap:18px}
+.wa::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(60% 80% at 100% 100%,rgba(255,255,255,.5),transparent 60%)}
+.wa h2{font-size:clamp(34px,9.5vw,46px);font-weight:800;letter-spacing:-.05em;line-height:.92}
+.marq{overflow:hidden;margin:0 -22px;border-top:1.5px solid #0b0a10;border-bottom:1.5px solid #0b0a10;padding:9px 0;white-space:nowrap}
+.marq div{display:inline-block;animation:marq 18s linear infinite;font-family:var(--mono);font-weight:600;font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+@keyframes marq{to{transform:translateX(-50%)}}
+.wa .foot{display:flex;justify-content:space-between;align-items:center;font-weight:700}
+.wa .arrow{background:#0b0a10;color:var(--acid);width:48px;height:48px}
+
+footer{text-align:center;color:#5d5a73;padding-top:22px;display:flex;flex-direction:column;gap:6px;align-items:center}
+footer svg{width:22px;opacity:.6}
+
+.toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom) + 24px);translate:-50% 30px;opacity:0;background:var(--ink);color:var(--bg);padding:11px 16px;border-radius:99px;font-weight:600;font-size:14px;transition:.35s;pointer-events:none;z-index:50}
+.toast.on{translate:-50% 0;opacity:1}
+
+:focus-visible{outline:2px solid var(--acid);outline-offset:3px;border-radius:12px}
+@media (min-width:700px){body{padding-top:56px}.mr{min-height:560px;padding:28px}}
+@media (max-width:380px){.crust{grid-template-columns:1fr}.plate{width:160px;order:-1}.grid{gap:8px}.tile h3{font-size:14px}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true"><i></i><i></i><i></i></div>
+
+<main class="wrap">
+  <header>
+    <div class="topbar">
+      <div class="status mono"><b></b>Building in Munich</div>
+      <button class="share mono" id="share" type="button" aria-label="Copy link to this page">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7M16 6l-4-4-4 4M12 2v14"/></svg>Share
+      </button>
+    </div>
+    <div class="avatar">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M14 54V10h36v11H27v8h20v11H27v14z" fill="#c6ff3d"/></svg>
+      <img src="https://ugc.production.linktr.ee/884b3599-54f1-4f36-b085-1b838362bcce_5D9D9601-334C-4AFB-B34C-FCEB6BA2FB79.jpeg?io=true&size=avatar-v3_0" alt="Andrei" onerror="this.remove()">
+    </div>
+    <h1><span>FlowZera</span></h1>
+    <p class="bio">I'm <strong>Andrei</strong> — I build interactive games for TikTok LIVE, web apps people actually use, and video that moves.</p>
+    <div class="roles mono"><span>Game dev</span><span>Web apps</span><span>Video editor</span><span>Motion design</span></div>
+    <nav class="socials" aria-label="Social links">
+      <a href="https://www.tiktok.com/@andreiflowzera" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 3c.4 2.2 1.7 3.6 3.9 3.8v3.1c-1.4.1-2.7-.3-3.9-1v6.2c0 3.9-3.3 6.3-6.6 5.8-2.9-.4-5-3-4.7-6 .3-3.3 3.3-5.6 6.6-5v3.2c-1.5-.4-3.3.5-3.5 2.1-.2 1.4.8 2.7 2.2 2.8 1.6.1 2.8-1 2.8-2.7V3z"/></svg></a>
+      <a href="https://youtu.be/cesPUFP6xrM" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1c.4-1.6.5-4.8.5-4.8s0-3.2-.5-4.8zM9.7 15V9l5.8 3z"/></svg></a>
+      <a href="https://wa.me/40728312270" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.8 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.1-1.9-.1-2.8-.9-4.9-3.2-5.9-5.3-.6-1.2-.6-2.6.5-3.6.3-.3.9-.4 1.2-.3.3.1.5.7.8 1.4.2.5.3.7 0 1.1l-.5.6c.6 1.4 1.8 2.5 3.2 3.1l.7-.8c.3-.3.5-.3.9-.1l1.8.9c.3.2.4.5.2 1.7z"/></svg></a>
+      <a href="https://flowzeragames.vercel.app" aria-label="FlowZeraGames"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="7" width="20" height="11" rx="5"/><path d="M7 11v3M5.5 12.5h3M15.5 12h.01M18 13.5h.01"/></svg></a>
+    </nav>
+  </header>
+
+  <!-- 01 · MIND RUSH (featured) -->
+  <article class="card mr reveal" data-tilt>
+    <div class="mr-rays" aria-hidden="true"></div>
+    <div class="shine"></div>
+    <div class="mr-head">
+      <span class="pill feat"><i></i>Featured · New</span>
+      <span class="pill ghost">TikTok LIVE game</span>
+    </div>
+    <div class="mr-logo" aria-label="MIND RUSH">
+      <span class="l1">MIND</span><span class="l2">RUSH</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="#c6ff3d"/></svg>
+    </div>
+    <p class="mr-sub">The speed-quiz where your chat is the controller. Viewers answer A, B, C or D — fastest brain climbs the board.</p>
+
+    <div class="mr-game" aria-hidden="true">
+      <div class="mr-qrow">
+        <div class="timer"><svg viewBox="0 0 42 42"><circle class="t1" cx="21" cy="21" r="18" stroke="rgba(255,255,255,.1)"/><circle class="t2" cx="21" cy="21" r="18"/></svg><span id="sec">6</span></div>
+        <div class="mr-q">Which planet has the most known moons?</div>
+      </div>
+      <div class="ans">
+        <div style="--p:.22"><b>A</b>Jupiter</div>
+        <div class="ok" style="--p:.61"><b>B</b>Saturn</div>
+        <div style="--p:.11"><b>C</b>Uranus</div>
+        <div style="--p:.06"><b>D</b>Neptune</div>
+      </div>
+      <div class="chat"><ul>
+        <li><span>@lena.k</span> answered <em>B</em> · 1.8s</li>
+        <li><span>@mr_tomato</span> answered <em>A</em> · 2.4s</li>
+        <li><span>@noahplays</span> answered <em>B</em> · 2.9s</li>
+        <li><span>@quizqueen</span> used <em>x2</em> · 3.1s</li>
+        <li><span>@d4nny</span> answered <em>B</em> · 3.6s</li>
+        <li><span>@sofi_rx</span> answered <em>C</em> · 4.2s</li>
+        <li><span>@lena.k</span> answered <em>B</em> · 1.8s</li>
+      </ul></div>
+    </div>
+
+    <div class="mr-feats"><span>10,000+ questions</span><span>Live leaderboard</span><span>Viewer shop</span><span>Duels</span></div>
+
+    <div class="mr-cta">
+      <a class="btn primary stretch" href="https://flowzeragames.vercel.app">Open MIND RUSH
+        <svg width="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="btn sec" href="https://flowzeragames.gumroad.com/l/mindrush">Get it <small>$4.99</small></a>
+    </div>
+  </article>
+
+  <!-- 02 · CRUST -->
+  <a class="card crust reveal stretch" data-tilt href="https://crustapp.vercel.app">
+    <div class="shine"></div>
+    <div class="meta">
+      <span class="ro"><span class="flag" aria-hidden="true"><i style="background:#002b7f"></i><i style="background:#fcd116"></i><i style="background:#ce1126"></i></span>App in Romanian</span>
+      <h2>Crust.</h2>
+      <p>500+ air fryer recipes with photos, macros and cook times — sorted by meal, region and time.</p>
+      <div class="foot"><span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span>Open the recipe app</span></div>
+    </div>
+    <div class="plate" aria-hidden="true">
+      <div class="heat"><i></i><i></i><i></i></div>
+      <div class="basket"></div>
+      <span class="chip">⏱ 18 min</span>
+      <span class="chip">200°C</span>
+      <span class="chip">312 kcal</span>
+    </div>
+  </a>
+
+  <!-- 03 · FLOWMEDIA -->
+  <a class="card fm reveal stretch" data-tilt href="https://flowmedia-five.vercel.app/">
+    <div class="shine"></div>
+    <div class="fm-top mono"><span>Video editing · Motion design</span><span class="rec"><i></i>REC</span></div>
+    <div>
+      <h2>Flow<em>Media</em></h2>
+      <p class="tag">Motion. Sound. Story. — Reels & TikToks that help brands grow.</p>
+    </div>
+    <div class="tl" aria-hidden="true">
+      <div class="ruler"><span>00:00</span><span>00:05</span><span>00:10</span><span>00:15</span><span>00:20</span></div>
+      <div class="track t1"><i style="left:0;width:30%"></i><i style="left:32%;width:22%"></i><i style="left:56%;width:40%"></i></div>
+      <div class="track t2"><i style="left:12%;width:18%"></i><i style="left:46%;width:30%"></i></div>
+      <div class="track t3" id="wave"></div>
+      <div class="playhead"></div>
+    </div>
+    <div class="foot"><span>View the portfolio</span><span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+  </a>
+
+  <div class="label mono reveal">Selected video work</div>
+  <section class="grid">
+    <a class="tile card reveal" data-tilt href="https://drive.google.com/drive/folders/10wWHxLe-7z6zz-mvT6OajVlRj9pU7lhH?usp=sharing">
+      <div class="shine"></div>
+      <div class="frame f1"><span class="ratio">16:9</span><i class="r169"></i></div>
+      <h3>VSL Demo</h3>
+      <div class="src mono"><span>Drive</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M7 17 17 7M8 7h9v9"/></svg></div>
+    </a>
+    <a class="tile card reveal" data-tilt href="https://drive.google.com/drive/folders/1WzV53BXuawxKvvyd1fISptYeQJn4Hk2C?usp=sharing">
+      <div class="shine"></div>
+      <div class="frame f2"><span class="ratio">9:16</span><i class="r916"></i></div>
+      <h3>UGC · Talking Head</h3>
+      <div class="src mono"><span>Drive</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M7 17 17 7M8 7h9v9"/></svg></div>
+    </a>
+    <a class="tile card reveal" data-tilt href="https://drive.google.com/drive/folders/1ehbHPYtOk5dLNryfVgKOTnI4S3xi5jTJ?usp=sharing">
+      <div class="shine"></div>
+      <div class="frame f3"><span class="ratio">9:16</span><i class="r916"></i></div>
+      <h3>Short-form Example</h3>
+      <div class="src mono"><span>Drive</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M7 17 17 7M8 7h9v9"/></svg></div>
+    </a>
+    <a class="tile card reveal" data-tilt href="https://youtu.be/cesPUFP6xrM">
+      <div class="shine"></div>
+      <div class="frame f4"><span class="ratio">16:9</span><i class="r169"></i></div>
+      <h3>Long-form DocuSeries Intro</h3>
+      <div class="src mono"><span>YouTube</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M7 17 17 7M8 7h9v9"/></svg></div>
+    </a>
+  </section>
+
+  <div class="label mono reveal">Channels</div>
+  <a class="card fbf reveal stretch" data-tilt href="https://www.tiktok.com/@framebyfearvideos">
+    <div class="shine"></div>
+    <div class="eye" aria-hidden="true">
+      <svg viewBox="0 0 66 40"><path d="M2 20C12 6 22 2 33 2s21 4 31 18C54 34 44 38 33 38S12 34 2 20z" fill="#f3e6e6"/><g class="pupil"><circle cx="33" cy="20" r="11" fill="#b30000"/><circle cx="33" cy="20" r="5" fill="#000"/><circle cx="36" cy="17" r="2" fill="#fff"/></g></svg>
+    </div>
+    <div>
+      <span class="mono">TikTok channel</span>
+      <h2>Frame By Fear</h2>
+      <p>2D AI animation channel.</p>
+    </div>
+    <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+  </a>
+
+  <a class="card wa reveal stretch" data-tilt href="https://wa.me/40728312270">
+    <div class="shine"></div>
+    <span class="mono">Open for collaborations</span>
+    <h2>Got a project? Let's make it move.</h2>
+    <div class="marq" aria-hidden="true"><div>Web apps ✦ TikTok LIVE games ✦ Reels & TikToks ✦ Motion design ✦ Video editing ✦ Web apps ✦ TikTok LIVE games ✦ Reels & TikToks ✦ Motion design ✦ Video editing ✦&nbsp;</div></div>
+    <div class="foot"><span>Message me on WhatsApp</span><span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+  </a>
+
+  <footer class="mono">
+    <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M14 54V10h36v11H27v8h20v11H27v14z" fill="currentColor"/></svg>
+    <span>© <span id="yr">2026</span> FlowZera · Made by Andrei</span>
+  </footer>
+</main>
+<div class="toast" id="toast" role="status">Link copied</div>
+
+<script>
+(()=>{
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // waveform
+  const w = document.getElementById('wave');
+  for (let i=0;i<64;i++){const b=document.createElement('b');b.style.height=(18+Math.abs(Math.sin(i*.55)*Math.cos(i*.17))*82)+'%';w.appendChild(b);}
+
+  // timer seconds synced with ring (6s loop)
+  const sec = document.getElementById('sec'); let s=6;
+  if(!reduce) setInterval(()=>{s = s<=1 ? 6 : s-1; sec.textContent=s;},1000);
+
+  // reveal on scroll
+  const io = new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
+  document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=Math.min(i*60,240)+'ms';io.observe(el);});
+
+  // tilt + shine (fine pointers only)
+  if (!reduce && matchMedia('(hover:hover) and (pointer:fine)').matches){
+    document.querySelectorAll('[data-tilt]').forEach(c=>{
+      c.addEventListener('pointermove',e=>{
+        const r=c.getBoundingClientRect(), x=(e.clientX-r.left)/r.width, y=(e.clientY-r.top)/r.height;
+        const k = c.classList.contains('tile') ? 7 : 4;
+        c.style.setProperty('--ry',((x-.5)*k)+'deg'); c.style.setProperty('--rx',((.5-y)*k)+'deg');
+        c.style.setProperty('--mx',x*100+'%'); c.style.setProperty('--my',y*100+'%');
+      });
+      c.addEventListener('pointerleave',()=>{c.style.setProperty('--rx','0deg');c.style.setProperty('--ry','0deg');});
+    });
+  }
+
+  // share
+  const t=document.getElementById('toast');
+  document.getElementById('share').addEventListener('click',async()=>{
+    const url=location.href.split('#')[0];
+    try{ if(navigator.share && matchMedia('(pointer:coarse)').matches){await navigator.share({title:'FlowZera',url});return;}
+         await navigator.clipboard.writeText(url); t.textContent='Link copied'; }
+    catch(e){ t.textContent=url; }
+    t.classList.add('on'); setTimeout(()=>t.classList.remove('on'),1800);
+  });
+})();
+</script>
+</body>
+</html>
