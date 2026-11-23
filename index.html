@@ -128,6 +128,78 @@ h1 span{background:linear-gradient(100deg,#fff 30%,var(--acid) 52%,#fff 74%);bac
 .fzg img{width:min(290px,74vw);height:auto;display:block;filter:drop-shadow(0 6px 22px rgba(124,92,255,.45))}
 .fzg:hover{transform:translateY(-2px) scale(1.03);filter:brightness(1.1)}
 
+
+/* ===== GAMES CAROUSEL ===== */
+.games{--sw:min(560px,calc(100vw - 52px));margin-inline:calc(50% - 50vw);position:relative}
+.g-head{display:flex;justify-content:space-between;align-items:center;color:var(--dim);width:var(--sw);margin:4px auto 0;padding:0 4px}
+.g-count b{color:var(--ink);font-weight:600}
+.games .track{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain;
+  padding:26px calc(50vw - var(--sw)/2) 30px;scroll-padding-inline:calc(50vw - var(--sw)/2);outline:none}
+.games .track::-webkit-scrollbar{display:none}
+.slide{flex:0 0 var(--sw);scroll-snap-align:center;scroll-snap-stop:always;display:flex;transition:opacity .5s,transform .5s cubic-bezier(.2,.8,.2,1),filter .5s}
+.slide>.card{width:100%}
+.slide:not(.on){opacity:.45;transform:scale(.94);filter:saturate(.7)}
+.slide .mr-checks{margin-top:auto;padding-top:16px}
+.slide .mr-stage{flex:none}
+.g-nav{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:-6px}
+.g-btn{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--ink);display:grid;place-items:center;cursor:pointer;backdrop-filter:blur(10px);transition:.25s}
+.g-btn:hover{background:var(--ink);color:var(--bg)}
+.g-btn svg{width:18px}
+.dots{display:flex;gap:8px;align-items:center}
+.dots button{width:8px;height:8px;border-radius:99px;border:0;padding:0;background:rgba(255,255,255,.25);cursor:pointer;transition:width .35s cubic-bezier(.2,.8,.2,1),background .3s}
+.dots button.on{width:28px;background:var(--ink)}
+.dots button.gold.on{background:linear-gradient(90deg,#fff2a8,#ffcb3d,#ff8a1f)}
+@media (min-width:900px){.g-btn{position:absolute;top:50%;translate:0 -50%;z-index:9;width:52px;height:52px}
+  #gPrev{left:calc(50% - var(--sw)/2 - 76px)}#gNext{right:calc(50% - var(--sw)/2 - 76px)}.g-nav{margin-top:-4px}}
+.btn.soon{background:rgba(255,255,255,.05);border:1.5px dashed rgba(255,255,255,.3);color:#cfcae8;cursor:default}
+
+/* PRICE RUSH */
+.mr.pr{--mcyan:#6dffc8;border-color:rgba(46,232,140,.3);box-shadow:0 0 0 1px rgba(46,232,140,.12),0 30px 80px -20px rgba(20,200,120,.5)}
+.mr.pr::before{background:radial-gradient(90% 55% at 50% 0%,rgba(30,220,130,.42),transparent 65%),radial-gradient(70% 45% at 100% 78%,rgba(255,215,61,.18),transparent 60%),radial-gradient(70% 40% at 0% 100%,rgba(56,200,255,.14),transparent 60%),linear-gradient(rgba(120,255,190,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(120,255,190,.06) 1px,transparent 1px),#03140c;background-size:auto,auto,auto,32px 32px,32px 32px,auto}
+.mr.pr .mr-rays{background:repeating-conic-gradient(from 0deg,transparent 0 8deg,rgba(40,230,140,.32) 8deg 10deg)}
+.mr.pr .big-title{background:linear-gradient(180deg,#eafff4,#4dffa6 50%,#10b866);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 18px rgba(40,230,140,.45))}
+.mr.pr .mr-h .g{background:linear-gradient(#fff6c2,#ffd23d 55%,#ff9a1f);-webkit-background-clip:text;background-clip:text;color:transparent}
+.mr.pr .qs{background:linear-gradient(135deg,#2ee88c,#0ea5a0)}
+.pr-stage .tag{position:absolute;left:50%;top:38px;translate:-50% 0;rotate:-6deg;width:236px;padding:26px 22px 22px 58px;border-radius:14px 26px 26px 14px;
+  background:linear-gradient(160deg,#fff8dc,#ffe08a 60%,#f5b62e);color:#1a1205;box-shadow:0 26px 50px -14px rgba(0,0,0,.75),inset 0 -4px 0 rgba(0,0,0,.08);
+  clip-path:polygon(34px 0,100% 0,100% 100%,34px 100%,0 50%);animation:ph1 6s ease-in-out infinite}
+.pr-stage .hole{position:absolute;left:24px;top:50%;width:14px;height:14px;margin-top:-7px;border-radius:50%;background:#03140c;box-shadow:inset 0 2px 3px rgba(0,0,0,.6)}
+.pr-stage .tag small{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;font-weight:600;opacity:.65}
+.pr-stage .roll{display:block;font-family:Bungee,var(--display);font-weight:400;font-size:54px;line-height:1;margin-top:6px;letter-spacing:.01em}
+.pr-stage .ring{position:absolute;right:6%;top:168px;width:92px;filter:drop-shadow(0 10px 20px rgba(0,0,0,.6))}
+.ring circle{fill:#06170f;stroke:rgba(255,255,255,.12);stroke-width:7}
+.ring .arc{fill:none;stroke:#2ee88c;stroke-linecap:round;stroke-dasharray:276;transform:rotate(-90deg);transform-origin:50% 50%;animation:countdown 20s linear infinite}
+@keyframes countdown{from{stroke-dashoffset:0}85%{stroke:#2ee88c}to{stroke-dashoffset:276;stroke:#ff4d6a}}
+.ring text{fill:#fff;font-family:Bungee;font-size:26px;text-anchor:middle}
+.chip2{position:absolute;font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.06em;padding:8px 11px;border-radius:12px;white-space:nowrap;animation:bob 4s ease-in-out infinite;box-shadow:0 10px 24px -8px rgba(0,0,0,.6)}
+.chip2.c1{left:4%;top:0;background:#ffd23d;color:#1a1205;rotate:-4deg}
+.chip2.c2{left:3%;top:200px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#e8fff3;backdrop-filter:blur(8px);animation-delay:-2s}
+
+/* URSITOAREA (tarot) */
+.mr.ur{--mcyan:#d9b8ff;border-color:rgba(190,140,255,.3);box-shadow:0 0 0 1px rgba(170,110,255,.12),0 30px 80px -20px rgba(150,80,255,.55)}
+.mr.ur::before{background:radial-gradient(90% 55% at 50% 0%,rgba(150,80,255,.5),transparent 65%),radial-gradient(70% 45% at 100% 78%,rgba(255,200,110,.16),transparent 60%),radial-gradient(70% 40% at 0% 100%,rgba(80,40,200,.3),transparent 60%),
+  radial-gradient(circle,rgba(255,255,255,.5) 1px,transparent 1.5px),#0b0418;background-size:auto,auto,auto,46px 46px,auto}
+.mr.ur .mr-rays{background:repeating-conic-gradient(from 0deg,transparent 0 8deg,rgba(180,120,255,.3) 8deg 10deg)}
+.ur-title{font-family:"Fraunces",serif!important;font-style:italic;font-weight:900;font-size:clamp(46px,13vw,68px)!important;letter-spacing:-.03em;line-height:1!important;
+  background:linear-gradient(180deg,#fff3d6,#ffcf7a 45%,#b77cff);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 20px rgba(180,120,255,.5))}
+.mr.ur .mr-h .g{background:linear-gradient(#fff3d6,#ffcf7a 55%,#e08b2a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.mr.ur .qs{background:linear-gradient(135deg,#b77cff,#5a2bd6)}
+.ro-pill{display:inline-flex;gap:7px}
+.ur-stage .tcard{position:absolute;left:50%;top:6px;width:104px;aspect-ratio:7/12;border-radius:12px;transform-origin:50% 120%;
+  background:radial-gradient(circle at 50% 50%,transparent 0 18px,#ffcf7a 19px 20px,transparent 21px),
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='104' height='178' viewBox='0 0 104 178'%3E%3Cpath d='M58 80a14 14 0 1 1-6-22 11 11 0 1 0 6 22z' fill='%23ffcf7a'/%3E%3Cg fill='%23ffcf7a' opacity='.8'%3E%3Cpath d='M52 22l2 6 6 2-6 2-2 6-2-6-6-2 6-2z'/%3E%3Cpath d='M52 140l2 6 6 2-6 2-2 6-2-6-6-2 6-2z'/%3E%3C/g%3E%3C/svg%3E") center/100% 100% no-repeat,
+  repeating-linear-gradient(45deg,rgba(255,207,122,.08) 0 2px,transparent 2px 10px),linear-gradient(160deg,#3a1a7a,#150833);
+  box-shadow:0 0 0 1px rgba(255,207,122,.5),inset 0 0 0 6px #150833,inset 0 0 0 7px rgba(255,207,122,.55),0 20px 40px -12px rgba(0,0,0,.8)}
+.ur-stage .t1{translate:-50% 0;rotate:-22deg;animation:fan1 6s ease-in-out infinite}
+.ur-stage .t2{translate:-50% -10px;z-index:1;animation:ph1 6s ease-in-out infinite}
+.ur-stage .t3{translate:-50% 0;rotate:22deg;animation:fan3 6s ease-in-out infinite}
+@keyframes fan1{50%{rotate:-26deg}}@keyframes fan3{50%{rotate:26deg}}
+.ur-stage .ball{position:absolute;left:50%;bottom:44px;translate:-50% 0;z-index:3;width:156px;height:156px;border-radius:50%;overflow:hidden;
+  background:radial-gradient(circle at 34% 28%,rgba(255,255,255,.75),rgba(255,255,255,0) 22%),radial-gradient(circle at 50% 60%,#c9a2ff,#6c3bdc 45%,#1d0a4d 80%);
+  box-shadow:0 0 60px rgba(170,110,255,.65),inset -10px -16px 30px rgba(10,0,40,.65),inset 0 0 0 1px rgba(255,255,255,.25)}
+.ur-stage .ball i{position:absolute;inset:-30%;background:conic-gradient(from 0deg,transparent,rgba(255,207,122,.35),transparent 30%,rgba(120,220,255,.3),transparent 60%,rgba(255,120,220,.3),transparent);filter:blur(14px);animation:rot 9s linear infinite;mix-blend-mode:screen}
+.ur-stage .stand{position:absolute;left:50%;bottom:22px;translate:-50% 0;z-index:2;width:118px;height:36px;border-radius:12px 12px 22px 22px;background:linear-gradient(180deg,#e0a64a,#7a4a14);box-shadow:0 14px 30px -10px rgba(0,0,0,.8)}
+
 /* ---------- cards ---------- */
 .card{position:relative;border-radius:var(--r);overflow:hidden;isolation:isolate;display:block;
   transform:perspective(900px) rotateX(var(--rx,0)) rotateY(var(--ry,0));transition:transform .5s cubic-bezier(.2,.8,.2,1),box-shadow .4s;
@@ -233,8 +305,8 @@ h1 span{background:linear-gradient(100deg,#fff 30%,var(--acid) 52%,#fff 74%);bac
 .fm .tag{color:var(--dim);font-size:15px;margin-top:6px}
 .tl{position:relative;border-radius:14px;background:#141419;border:1px solid var(--line);padding:10px 10px 8px;overflow:hidden}
 .ruler{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9px;color:#5d5b6c;margin-bottom:7px}
-.track{height:16px;position:relative;margin-bottom:5px}
-.track i{position:absolute;top:0;bottom:0;border-radius:4px}
+.trk{height:16px;position:relative;margin-bottom:5px}
+.trk i{position:absolute;top:0;bottom:0;border-radius:4px}
 .t1 i{background:linear-gradient(90deg,#7b5cff,#9f87ff)}.t2 i{background:linear-gradient(90deg,#34e2ff,#7ff0ff)}
 .t3{height:20px;display:flex;align-items:center;gap:2px}
 .t3 b{flex:1;background:#c6ff3d;border-radius:2px;opacity:.75}
@@ -325,8 +397,12 @@ footer svg{width:22px;opacity:.6}
     </nav>
   </header>
 
-  <!-- 01 · MIND RUSH (featured) -->
-  <article class="card mr star reveal" data-tilt>
+  <!-- 01 · GAMES CAROUSEL (MIND RUSH featured first) -->
+  <section class="games reveal" aria-roledescription="carousel" aria-label="FlowZeraGames">
+    <div class="g-head mono"><span>TikTok LIVE games</span><span class="g-count"><b id="gNow">01</b> / 05</span></div>
+    <div class="track" id="gTrack" tabindex="0">
+      <div class="slide" role="group" aria-roledescription="slide" aria-label="1 of 5: MIND RUSH">
+        <article class="card mr star" data-tilt>
     <div class="mr-rays" aria-hidden="true"></div>
     <div class="sparks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
     <div class="shine"></div>
@@ -348,30 +424,9 @@ footer svg{width:22px;opacity:.6}
       <a data-id="mindrush" class="btn sec stretch" href="https://flowzeragames.vercel.app">Explore ↗</a>
     </div>
   </article>
-
-  <article class="card mr pp reveal" data-tilt>
-    <div class="mr-rays" aria-hidden="true"></div>
-    <div class="shine"></div>
-    <div class="mr-head">
-      <span class="pill new"><i></i>New · 3 games in 1</span>
-      <span class="pill ghost">TikTok LIVE game</span>
-    </div>
-    <div class="big-title">PARTY<br>PACK</div>
-    <h2 class="mr-h">Three games. <span class="c">One</span> <span class="g">party.</span></h2>
-    <p class="mr-sub">Jackbox-style games for a chat full of people: <b>PUNCHLINE</b>, <b>HIVEMIND</b> and <b>WHAT YEAR?</b> The chat votes which one comes next, then it runs by itself.</p>
-    <div class="mr-stage" aria-hidden="true">
-      <div class="phone p2"><img src="assets/pp-punch.webp" alt="" loading="lazy"></div>
-      <div class="phone p1"><img src="assets/pp-hub.webp" alt="" loading="lazy"></div>
-      <div class="qs"><small>CHAT</small><span>VOTES</span></div>
-    </div>
-    <div class="mr-checks"><span>7 days free</span><span>Then $5/month</span><span>Host Panel included</span></div>
-    <div class="mr-cta">
-      <a data-id="partypack-trial" class="btn gold" href="https://flowzeragames.vercel.app/#partypack">Try it free · 7 days</a>
-      <a data-id="partypack" class="btn sec stretch" href="https://flowzeragames.vercel.app/#partypack">Explore ↗</a>
-    </div>
-  </article>
-
-  <article class="card mr nr reveal" data-tilt>
+      </div>
+      <div class="slide" role="group" aria-roledescription="slide" aria-label="2 of 5: Nitro Rally">
+        <article class="card mr nr" data-tilt>
     <div class="mr-rays" aria-hidden="true"></div>
     <div class="shine"></div>
     <div class="mr-head">
@@ -392,6 +447,88 @@ footer svg{width:22px;opacity:.6}
       <a data-id="nitrorally" class="btn sec stretch" href="https://flowzeragames.vercel.app/#nitro">Explore ↗</a>
     </div>
   </article>
+      </div>
+      <div class="slide" role="group" aria-roledescription="slide" aria-label="3 of 5: Party Pack">
+        <article class="card mr pp" data-tilt>
+    <div class="mr-rays" aria-hidden="true"></div>
+    <div class="shine"></div>
+    <div class="mr-head">
+      <span class="pill new"><i></i>New · 3 games in 1</span>
+      <span class="pill ghost">TikTok LIVE game</span>
+    </div>
+    <div class="big-title">PARTY<br>PACK</div>
+    <h2 class="mr-h">Three games. <span class="c">One</span> <span class="g">party.</span></h2>
+    <p class="mr-sub">Jackbox-style games for a chat full of people: <b>PUNCHLINE</b>, <b>HIVEMIND</b> and <b>WHAT YEAR?</b> The chat votes which one comes next, then it runs by itself.</p>
+    <div class="mr-stage" aria-hidden="true">
+      <div class="phone p2"><img src="assets/pp-punch.webp" alt="" loading="lazy"></div>
+      <div class="phone p1"><img src="assets/pp-hub.webp" alt="" loading="lazy"></div>
+      <div class="qs"><small>CHAT</small><span>VOTES</span></div>
+    </div>
+    <div class="mr-checks"><span>7 days free</span><span>Then $5/month</span><span>Host Panel included</span></div>
+    <div class="mr-cta">
+      <a data-id="partypack-trial" class="btn gold" href="https://flowzeragames.vercel.app/#partypack">Try it free · 7 days</a>
+      <a data-id="partypack" class="btn sec stretch" href="https://flowzeragames.vercel.app/#partypack">Explore ↗</a>
+    </div>
+  </article>
+      </div>
+      <div class="slide" role="group" aria-roledescription="slide" aria-label="4 of 5: Price Rush">
+        <article class="card mr pr" data-tilt>
+    <div class="mr-rays" aria-hidden="true"></div>
+    <div class="shine"></div>
+    <div class="mr-head">
+      <span class="pill new"><i></i>New · Coming soon</span>
+      <span class="pill ghost">TikTok LIVE game</span>
+    </div>
+    <div class="big-title">PRICE<br>RUSH</div>
+    <h2 class="mr-h">Guess it. <span class="c">Nail</span> <span class="g">the price.</span></h2>
+    <p class="mr-sub">A Price-is-Right style show for TikTok LIVE. Viewers type their guess in chat, <b>20 seconds</b> per round, closest wins and <b>bullseyes</b> take the spotlight.</p>
+    <div class="mr-stage pr-stage" aria-hidden="true">
+      <div class="tag"><span class="hole"></span><small>THE PRICE IS</small><b class="roll">$<span id="prRoll">??</span></b></div>
+      <svg class="ring" viewBox="0 0 100 100"><circle cx="50" cy="50" r="44"/><circle class="arc" cx="50" cy="50" r="44"/><text x="50" y="58">20</text></svg>
+      <span class="chip2 c1">🎯 BULLSEYE</span>
+      <span class="chip2 c2">▲ HIGHER · LOWER ▼</span>
+      <div class="qs"><small>3 ROUND</small><span>TYPES</span></div>
+    </div>
+    <div class="mr-checks"><span>20-second rounds</span><span>Classic, Higher/Lower, Order it</span><span>All-time leaderboard</span></div>
+    <div class="mr-cta">
+      <span class="btn soon">Coming soon</span>
+      <a data-id="pricerush" class="btn sec stretch" href="https://flowzeragames.vercel.app">FlowZeraGames ↗</a>
+    </div>
+  </article>
+      </div>
+      <div class="slide" role="group" aria-roledescription="slide" aria-label="5 of 5: Ursitoarea">
+        <article class="card mr ur" data-tilt>
+    <div class="mr-rays" aria-hidden="true"></div>
+    <div class="shine"></div>
+    <div class="mr-head">
+      <span class="pill new"><i></i>New · AI live show</span>
+      <span class="pill ghost ro-pill"><span class="flag" aria-hidden="true"><i style="background:#002b7f"></i><i style="background:#fcd116"></i><i style="background:#ce1126"></i></span>In Romanian</span>
+    </div>
+    <div class="big-title ur-title">Ursitoarea</div>
+    <h2 class="mr-h">One gift. <span class="c">One</span> <span class="g">reading.</span></h2>
+    <p class="mr-sub">A live AI fortune-teller for TikTok LIVE. When a viewer sends a gift, <b>Ursitoarea</b> looks into her crystal ball, draws their <b>tarot cards</b> and reads them out loud, with a talking face and a real voice.</p>
+    <div class="mr-stage ur-stage" aria-hidden="true">
+      <div class="tcard t1"></div><div class="tcard t2"></div><div class="tcard t3"></div>
+      <div class="ball"><i></i></div>
+      <div class="stand"></div>
+      <div class="qs"><small>TAROT</small><span>LIVE</span></div>
+    </div>
+    <div class="mr-checks"><span>Talking AI avatar</span><span>Spoken readings</span><span>Made for Romanian LIVEs</span></div>
+    <div class="mr-cta">
+      <span class="btn soon">Coming soon</span>
+      <a data-id="ursitoarea" class="btn sec stretch" href="https://flowzeragames.vercel.app">FlowZeraGames ↗</a>
+    </div>
+  </article>
+      </div>
+    </div>
+    <div class="g-nav">
+      <button class="g-btn" id="gPrev" type="button" aria-label="Previous game"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+      <div class="dots" id="gDots">
+        <button type="button" data-n="0" aria-label="MIND RUSH" class="gold"></button><button type="button" data-n="1" aria-label="Nitro Rally"></button><button type="button" data-n="2" aria-label="Party Pack"></button><button type="button" data-n="3" aria-label="Price Rush"></button><button type="button" data-n="4" aria-label="Ursitoarea"></button>
+      </div>
+      <button class="g-btn" id="gNext" type="button" aria-label="Next game"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></button>
+    </div>
+  </section>
 
   <!-- 02 · CRUST -->
   <a data-id="crust" class="card crust reveal stretch" data-tilt href="https://crustapp.vercel.app">
@@ -421,9 +558,9 @@ footer svg{width:22px;opacity:.6}
     </div>
     <div class="tl" aria-hidden="true">
       <div class="ruler"><span>00:00</span><span>00:05</span><span>00:10</span><span>00:15</span><span>00:20</span></div>
-      <div class="track t1"><i style="left:0;width:30%"></i><i style="left:32%;width:22%"></i><i style="left:56%;width:40%"></i></div>
-      <div class="track t2"><i style="left:12%;width:18%"></i><i style="left:46%;width:30%"></i></div>
-      <div class="track t3" id="wave"></div>
+      <div class="trk t1"><i style="left:0;width:30%"></i><i style="left:32%;width:22%"></i><i style="left:56%;width:40%"></i></div>
+      <div class="trk t2"><i style="left:12%;width:18%"></i><i style="left:46%;width:30%"></i></div>
+      <div class="trk t3" id="wave"></div>
       <div class="playhead"></div>
     </div>
     <div class="foot"><span>View the portfolio</span><span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
@@ -504,6 +641,34 @@ footer svg{width:22px;opacity:.6}
   const w = document.getElementById('wave');
   for (let i=0;i<64;i++){const b=document.createElement('b');b.style.height=(18+Math.abs(Math.sin(i*.55)*Math.cos(i*.17))*82)+'%';w.appendChild(b);}
 
+
+
+  // games carousel
+  const tr=document.getElementById('gTrack'), slides=[...tr.querySelectorAll('.slide')], dots=[...document.querySelectorAll('#gDots button')], now=document.getElementById('gNow');
+  let cur=-1, auto=null, user=false;
+  const go=(i,smooth=true)=>{i=(i+slides.length)%slides.length; const s=slides[i];
+    tr.scrollTo({left:s.offsetLeft-(tr.clientWidth-s.offsetWidth)/2,behavior:(smooth&&!reduce)?'smooth':'auto'});};
+  const mark=()=>{const c=tr.scrollLeft+tr.clientWidth/2; let b=0,d=1e9;
+    slides.forEach((s,i)=>{const m=Math.abs(s.offsetLeft+s.offsetWidth/2-c); if(m<d){d=m;b=i;}});
+    if(b===cur) return; cur=b; slides.forEach((s,i)=>{s.classList.toggle('on',i===b); s.setAttribute('aria-hidden',i!==b);
+      s.querySelectorAll('a,button').forEach(x=>x.tabIndex=i===b?0:-1);});
+    dots.forEach((d,i)=>{d.classList.toggle('on',i===b); d.setAttribute('aria-current',i===b);}); now.textContent=String(b+1).padStart(2,'0');};
+  let raf=0; tr.addEventListener('scroll',()=>{cancelAnimationFrame(raf); raf=requestAnimationFrame(mark);},{passive:true});
+  addEventListener('resize',()=>go(cur<0?0:cur,false));
+  const stop=()=>{user=true; clearInterval(auto);};
+  ['pointerdown','wheel','touchstart','keydown'].forEach(ev=>tr.addEventListener(ev,stop,{passive:true}));
+  document.getElementById('gPrev').onclick=()=>{stop();go(cur-1);};
+  document.getElementById('gNext').onclick=()=>{stop();go(cur+1);};
+  dots.forEach((d,i)=>d.onclick=()=>{stop();go(i);});
+  tr.addEventListener('keydown',e=>{if(e.key==='ArrowRight'){e.preventDefault();go(cur+1);} if(e.key==='ArrowLeft'){e.preventDefault();go(cur-1);}});
+  go(0,false); mark();
+  let hover=false; tr.addEventListener('mouseenter',()=>hover=true); tr.addEventListener('mouseleave',()=>hover=false);
+  if(!reduce) auto=setInterval(()=>{ if(!user && !hover && !document.hidden) go(cur+1); },7000);
+
+  // price tag roll
+  const roll=document.getElementById('prRoll'); const prices=[19,249,64,1199,35,89,450,12,129,799];
+  if(roll && !reduce){ let k=0; setInterval(()=>{ if(cur!==3) return; let n=0; const target=prices[k++%prices.length];
+    const t=setInterval(()=>{ roll.textContent = ++n<9 ? Math.floor(Math.random()*999+1) : target.toLocaleString('en-US'); if(n>=9) clearInterval(t); },60); },2600); }
 
   // reveal on scroll
   const io = new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
